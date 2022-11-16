@@ -1,5 +1,4 @@
-# TODO
-# GitForOps- This is the starting template from another project
+# GitForOps - TODO - This is the outline from previous content, needs to be reviewed and revised
 
 ## Why Git?
 
