@@ -1,14 +1,8 @@
-# Project
+# Welcome
 
-> This repo has been populated by an initial template to help get you started. Please
-> make sure to update the content to build a great experience for community-building.
+Welcome to the IT Ops Talk GitHub Repo. Here you'll find a collection of scripts and samples to help IT/Ops on different situations. The Microsoft Modern Infrastructure Cloud Advocates are responsible for the content on this repo.
 
-As the maintainer of this project, please make a few updates:
-
-- Improving this README.MD file to provide a great experience
-- Updating SUPPORT.MD with content about this project's support experience
-- Understanding the security reporting process in SECURITY.MD
-- Remove this section from the README
+Please visit our blog at [IT Ops Talk](https://itpostalk.com).
 
 ## Contributing
 
