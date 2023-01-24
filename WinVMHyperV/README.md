@@ -1,7 +1,6 @@
 # Create Windows 11 VM on Hyper-V
 
->[!Note]
->This sample is part of the blog post [How to run a Windows 11 VM on Hyper-V](https://techcommunity.microsoft.com/t5/itops-talk-blog/how-to-run-a-windows-11-vm-on-hyper-v/ba-p/3713948)
+**Note**: This sample is part of the blog post [How to run a Windows 11 VM on Hyper-V](https://techcommunity.microsoft.com/t5/itops-talk-blog/how-to-run-a-windows-11-vm-on-hyper-v/ba-p/3713948)
 
 By default, a regular Hyper-V cannot run Windows 11 as a guest. To satisfy the Windows 11 requirements, some configurations need to be in place for the VM to run Windows 11. These are:
 
