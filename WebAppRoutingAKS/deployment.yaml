@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: iis-app-routing
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: iis-app-routing
+  template:
+    metadata:
+      labels:
+        app: iis-app-routing
+    spec:
+      nodeSelector:
+        "kubernetes.io/os": windows
+      containers:
+      - name: iis-app-routing
+        image: mcr.microsoft.com/windows/servercore/iis:windowsservercore-ltsc2019
+        resources:
+          limits:
+            cpu: 1
+            memory: 800M
+          requests:
+            cpu: .5
+            memory: 400M
+        ports:
+        - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: iis-app-routing
+spec:
+  type: ClusterIP
+  ports:
+  - port: 80
+  selector:
+    app: iis-app-routing
