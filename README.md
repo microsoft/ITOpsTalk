@@ -1,8 +1,8 @@
 # Welcome
 
-Welcome to the IT Ops Talk GitHub Repo. Here you'll find a collection of scripts and samples to help IT/Ops on different situations. The Microsoft Modern Infrastructure Cloud Advocates are responsible for the content on this repo.
+Welcome to the ITOpsTalk GitHub Repo. Here you'll find a collection of scripts and samples to help IT/Ops on different situations. The Microsoft Modern Infrastructure Cloud Advocates are responsible for the content on this repo.
 
-Please visit our blog at [IT Ops Talk](https://itpostalk.com).
+Please visit our blog at [ITOpsTalk](https://itpostalk.com).
 
 ## Contributing
 
