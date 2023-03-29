@@ -2,7 +2,7 @@
 
 To manage the costs and to keep track of the resources deployed in am Azure  subscription we've setup a process to shutdown VM based on tags.
 
-We create a Automation Runbook that runs the process every night at 11:00pm eastern time zone.  this document outlines the perticulars of our efforts
+We create a Automation Runbook that runs the process every night at 12:00am eastern time zone.  this document outlines the perticulars of our efforts
 
 Please ensure that you tag your resources with the following tags
 
