@@ -1,0 +1,4 @@
+Resources
+| where type == "microsoft.automation/automationaccounts"
+| where properties.runAsAccount != ''
+| project name, resourceGroup, location, properties.runAsAccount
