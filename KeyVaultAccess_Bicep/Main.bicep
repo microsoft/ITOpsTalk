@@ -4,7 +4,6 @@ param now string = utcNow('F')
 var keyvaultName = toLower('KeyVault${uniqueString(resourceGroup().id)}')
 var keyvaultTenantId = subscription().tenantId
 var getDeployObjectIDScript = loadTextContent('./scripts/getDeployObjectID.ps1')
-var sshKeyGenScript = loadTextContent('./scripts/sshKeyGen.sh')
 
 //Create User Defined Identity
 
