@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: hpc-sample
+  namespace: kube-system
+  labels:
+    app: hpc-sample
+spec:
+  selector:
+    matchLabels:
+      app: hpc-sample
+  template:
+    metadata:
+      labels:
+        app: hpc-sample
+    spec:
+      nodeSelector:
+        kubernetes.io/os: windows
+      containers:
+        - name: powershell
+          image: mcr.microsoft.com/powershell:windowsservercore-ltsc2022
+          securityContext:
+            windowsOptions:
+              hostProcess: true
+              runAsUserName: "NT AUTHORITY\\SYSTEM"
+          command:
+            - powershell.exe
+            - -command
+            - |
+              $AdminRights = ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]"Administrator")
+              Write-Host "Process has admin rights: $AdminRights"
+              while ($true) { Start-Sleep -Seconds 2147483 }
+      hostNetwork: true
+      terminationGracePeriodSeconds: 0
