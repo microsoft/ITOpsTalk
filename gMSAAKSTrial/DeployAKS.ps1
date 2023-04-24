@@ -46,7 +46,7 @@ $Username = Read-Host -Prompt 'Please create a username for the administrator cr
 $Password = Read-Host -Prompt 'Please create a password for the administrator credentials on your Windows Server nodes' -AsSecureString
 $vnetinfo = Get-AzVirtualNetwork -Name $vNet_Name -ResourceGroupName $RG_Name
 $subnetid = $vnetinfo.Subnets[0].Id
-New-AzAksCluster -ResourceGroupName $RG_Name -Name $AKSCluster_Name -NodeCount 2 -NetworkPlugin azure -NodeVnetSubnetID $subnetid -ServiceCidr '10.240.0.0/16' -DnsServiceIP '10.240.0.10' -NodeVmSetType VirtualMachineScaleSets -WindowsProfileAdminUserName $Username -WindowsProfileAdminUserPassword $Password -EnableManagedIdentity
+New-AzAksCluster -ResourceGroupName $RG_Name -Name $AKSCluster_Name -NodeCount 2 -NetworkPlugin azure -NodeVnetSubnetID $subnetid -ServiceCidr '10.240.0.0/16' -DnsServiceIP '10.240.0.10' -NodeVmSetType VirtualMachineScaleSets -WindowsProfileAdminUserName $Username -WindowsProfileAdminUserPassword $Password -GenerateSshKey -EnableManagedIdentity
 #az aks create --resource-group $RG_Name --name $AKSCluster_Name --node-count 2 --network-plugin azure --vnet-subnet-id $subnetid --service-cidr '10.240.0.0/16' --dns-service-ip '10.240.0.10' --vm-set-type VirtualMachineScaleSets --windows-admin-username $Username --windows-admin-password $Password --enable-managed-identity
 
 #Creates new pool for Windows nodes
