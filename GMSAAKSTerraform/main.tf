@@ -34,7 +34,7 @@ resource "azurerm_user_assigned_identity" "managed_identity" {
 
 #Creates Azure Key Vault
 resource "azurerm_key_vault" "akv" {
-  name                        = "viniapgmsatest"
+  name                        = "gmsatestviniap"
   location                    = azurerm_resource_group.rg.location
   resource_group_name         = azurerm_resource_group.rg.name
   tenant_id                   = data.azurerm_client_config.current.tenant_id
@@ -59,6 +59,13 @@ resource "azurerm_key_vault_access_policy" "akvpolicy" {
   secret_permissions = [
     "Get"
   ]
+}
+
+#Assign reader role to Terraform session on Azure Key Vault
+resource "azurerm_role_assignment" "tf_akv_reader" {
+  scope                = azurerm_key_vault.akv.id
+  role_definition_name = "Reader"
+  principal_id         = data.azurerm_client_config.current.client_id
 }
 
 #Define AKV access for terraform session
@@ -144,6 +151,32 @@ resource "azurerm_windows_virtual_machine" "dc01" {
   }
 }
 
+#Install Active Directory on the DC01 VM
+resource "azurerm_virtual_machine_extension" "install_ad" {
+  name                 = "install_ad"
+#  resource_group_name  = azurerm_resource_group.main.name
+  virtual_machine_id   = azurerm_windows_virtual_machine.dc01.id
+  publisher            = "Microsoft.Compute"
+  type                 = "CustomScriptExtension"
+  type_handler_version = "1.9"
+
+  protected_settings = <<SETTINGS
+  {    
+    "commandToExecute": "powershell -command \"[System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('${base64encode(data.template_file.ADDS.rendered)}')) | Out-File -filepath ADDS.ps1\" && powershell -ExecutionPolicy Unrestricted -File ADDS.ps1 -Domain_DNSName ${data.template_file.ADDS.vars.Domain_DNSName} -Domain_NETBIOSName ${data.template_file.ADDS.vars.Domain_NETBIOSName} -SafeModeAdministratorPassword ${data.template_file.ADDS.vars.SafeModeAdministratorPassword}"
+  }
+  SETTINGS
+}
+
+#Variable input for the ADDS.ps1 script
+data "template_file" "ADDS" {
+    template = "${file("ADDS.ps1")}"
+    vars = {
+        Domain_DNSName          = "${var.Domain_DNSName}"
+        Domain_NETBIOSName      = "${var.netbios_name}"
+        SafeModeAdministratorPassword = "${var.SafeModeAdministratorPassword}"
+  }
+} 
+
 #Creates AKS cluster with Windows profile and gMSA enabled, and uses existing vNet
 #This is dependable on DC01 VM as we need to set up the DNS primary IP for the Windows nodes
 resource "azurerm_kubernetes_cluster" "aks" {
@@ -189,6 +222,9 @@ resource "azurerm_kubernetes_cluster_node_pool" "win" {
   vm_size               = "Standard_D4s_v3"
   node_count            = var.node_count_windows
   os_type               = "Windows"
+  depends_on = [ 
+    azurerm_virtual_machine_extension.install_ad
+   ]
 }
 
 output "kube_config" {
@@ -233,7 +269,7 @@ resource "azurerm_bastion_host" "gmsa_dc_bastion" {
 
   ip_configuration {
     name                 = "configuration"
-    subnet_id            = azurerm_subnet.AzureBastionSubnet
+    subnet_id            = azurerm_subnet.AzureBastionSubnet.id
     public_ip_address_id = azurerm_public_ip.bastion_ip.id
   }
 }
