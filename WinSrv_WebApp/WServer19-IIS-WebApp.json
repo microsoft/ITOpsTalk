@@ -175,25 +175,15 @@
                     "computerName": "[parameters('vmName')]",
                     "adminUsername": "[parameters('adminUsername')]",
                     "adminPassword": "[parameters('adminPassword')]",
-                    "customData": "[base64(concat('powershell Add-WindowsFeature Web-Server'))]",
-                    "customScriptExtension": {
-        "publisher": "Microsoft.Compute",
-        "type": "CustomScriptExtension",
-        "typeHandlerVersion": "1.9",
-        "autoUpgradeMinorVersion": true,
-        "settings": {
-            "fileUris": [
-                "https://raw.githubusercontent.com/Azure-Samples/html-docs-hello-world/master/index.html"
-            ],
-            "commandToExecute": "powershell.exe -ExecutionPolicy Unrestricted -File index.html"
+                    "customData": "[base64(concat('powershell Add-WindowsFeature Web-Server'))]"
                 }
             }
-        }}}
+        }
     ],
     "outputs": {
         "vmName": {
             "type": "string",
             "value": "[parameters('vmName')]"
-        }
+        },
     }
 }
