@@ -1,0 +1,6 @@
+# Use the IIS base image for Windows Server Core
+FROM mcr.microsoft.com/windows/servercore/iis:windowsservercore-ltsc2022
+# Copy the website files to the container
+#COPY ./website/ c:/inetpub/wwwroot/
+# Expose port 80 for HTTP traffic
+EXPOSE 80
