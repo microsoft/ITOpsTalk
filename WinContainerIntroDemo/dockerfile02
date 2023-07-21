@@ -1,7 +1,0 @@
-FROM mcr.microsoft.com/windows/servercore/iis:windowsservercore-ltsc2022
-WORKDIR /sample
-COPY /ViniBeer/ .
-RUN PowerShell Install-WindowsFeature NET-Framework-45-ASPNET; \
-	Install-WindowsFeature Web-Asp-Net45
-RUN PowerShell Import-Module WebAdministration; \
-	New-WebApplication "sample" -Site 'Default Web Site' -ApplicationPool "DefaultAppPool" -PhysicalPath "C:\sample"
